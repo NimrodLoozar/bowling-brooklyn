@@ -7,21 +7,22 @@
 
             <div class="mb-4">
                 <label for="product" class="block font-medium">Product (Eten):</label>
-                <select id="product" name="product" required class="w-full p-2 border rounded">
-                    <option value="Pizza" {{ $order->product == 'Pizza' ? 'selected' : '' }}>Pizza (€10.00)</option>
-                    <option value="Hamburger" {{ $order->product == 'Hamburger' ? 'selected' : '' }}>Hamburger (€8.50)</option>
-                    <option value="Friet" {{ $order->product == 'Friet' ? 'selected' : '' }}>Friet (€5.00)</option>
+                <select id="product" name="product[]" multiple required class="w-full p-2 border rounded">
+                    <option value="Pizza" {{ in_array('Pizza', $order->product ?? []) ? 'selected' : '' }}>Pizza (€10.00)</option>
+                    <option value="Hamburger" {{ in_array('Hamburger', $order->product ?? []) ? 'selected' : '' }}>Hamburger (€8.50)</option>
+                    <option value="Friet" {{ in_array('Friet', $order->product ?? []) ? 'selected' : '' }}>Friet (€5.00)</option>
                 </select>
+                <small class="text-gray-500">Houd Ctrl of Cmd ingedrukt om meerdere opties te selecteren.</small>
             </div>
 
             <div class="mb-4">
                 <label for="sub-product" class="block font-medium">Subproduct (Drinken):</label>
-                <select id="sub-product" name="sub_product" class="w-full p-2 border rounded">
-                    <option value="" disabled>Selecteer een subproduct</option>
-                    <option value="Cola" {{ $order->sub_product == 'Cola' ? 'selected' : '' }}>Cola (€2.50)</option>
-                    <option value="Fanta" {{ $order->sub_product == 'Fanta' ? 'selected' : '' }}>Fanta (€2.50)</option>
-                    <option value="Water" {{ $order->sub_product == 'Water' ? 'selected' : '' }}>Water (€1.50)</option>
+                <select id="sub-product" name="sub_product[]" multiple class="w-full p-2 border rounded">
+                    <option value="Cola" {{ in_array('Cola', $order->sub_product ?? []) ? 'selected' : '' }}>Cola (€2.50)</option>
+                    <option value="Fanta" {{ in_array('Fanta', $order->sub_product ?? []) ? 'selected' : '' }}>Fanta (€2.50)</option>
+                    <option value="Water" {{ in_array('Water', $order->sub_product ?? []) ? 'selected' : '' }}>Water (€1.50)</option>
                 </select>
+                <small class="text-gray-500">Houd Ctrl of Cmd ingedrukt om meerdere opties te selecteren.</small>
             </div>
 
             <div class="mb-4">
@@ -49,6 +50,7 @@
                     <option value="Creditcard" {{ $order->betaalmethode == 'Creditcard' ? 'selected' : '' }}>Creditcard</option>
                     <option value="PayPal" {{ $order->betaalmethode == 'PayPal' ? 'selected' : '' }}>PayPal</option>
                     <option value="iDEAL" {{ $order->betaalmethode == 'iDEAL' ? 'selected' : '' }}>iDEAL</option>
+                    <option value="Contant" {{ $order->betaalmethode == 'Contant' ? 'selected' : '' }}>Contant</option>
                 </select>
             </div>
 
@@ -72,5 +74,11 @@
 
             <button type="submit" class="bg-yellow-500 text-white px-4 py-2 rounded hover:bg-yellow-600">Update</button>
         </form>
+        <!-- Back to Overview Button -->
+        <div class="mt-6">
+            <a href="{{ route('orders.index') }}" class="inline-block bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600">
+                Back to Overview
+            </a>
+        </div>
     </div>
 </x-layouts.app>

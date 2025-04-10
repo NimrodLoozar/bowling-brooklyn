@@ -30,8 +30,10 @@ class OrderController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'product' => 'nullable|string|max:255', // Validate product as a string
-            'sub_product' => 'nullable|string|max:255', // Validate sub_product as a string
+            'product' => 'nullable|array', // Validate product as an array
+            'product.*' => 'string|max:255', // Validate each product
+            'sub_product' => 'nullable|array', // Validate sub_product as an array
+            'sub_product.*' => 'string|max:255', // Validate each sub_product
             'status' => 'required|string|max:50',
             'totaalbedrag' => 'required|numeric',
             'betaalmethode' => 'nullable|string|max:50',
@@ -40,6 +42,8 @@ class OrderController extends Controller
             'opmerking' => 'nullable|string',
         ]);
 
+        $validated['product'] = json_encode($validated['product'] ?? []); // Encode as JSON
+        $validated['sub_product'] = json_encode($validated['sub_product'] ?? []); // Encode as JSON
         $validated['besteldatum'] = now();
         $validated['user_id'] = auth()->id() ?? 1;
 
@@ -72,8 +76,10 @@ class OrderController extends Controller
         }
 
         $validated = $request->validate([
-            'product' => 'nullable|string|max:255', // Validate product as a string
-            'sub_product' => 'nullable|string|max:255', // Validate sub_product as a string
+            'product' => 'nullable|array', // Validate product as an array
+            'product.*' => 'string|max:255', // Validate each product
+            'sub_product' => 'nullable|array', // Validate sub_product as an array
+            'sub_product.*' => 'string|max:255', // Validate each sub_product
             'besteldatum' => 'required|date',
             'status' => 'required|string|max:50',
             'totaalbedrag' => 'required|numeric',
@@ -82,6 +88,9 @@ class OrderController extends Controller
             'aantal' => 'required|integer',
             'opmerking' => 'nullable|string',
         ]);
+
+        $validated['product'] = json_encode($validated['product'] ?? []); // Encode as JSON
+        $validated['sub_product'] = json_encode($validated['sub_product'] ?? []); // Encode as JSON
 
         $order->update($validated);
 
@@ -93,6 +102,11 @@ class OrderController extends Controller
      */
     public function destroy(Order $order)
     {
+        // Check if the order can be deleted
+        if (!in_array($order->status, ['Geannuleerd']) && $order->betaalstatus !== 'Betaald') {
+            return redirect()->route('orders.index')->with('error', 'Bestelling kan alleen worden verwijderd als de status "Geannuleerd" is of de betaalstatus "Betaald" is.');
+        }
+
         $order->delete();
 
         return redirect()->route('orders.index')->with('success', 'Order deleted successfully.');

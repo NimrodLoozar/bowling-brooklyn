@@ -14,8 +14,8 @@ return new class extends Migration
         Schema::create('orders', function (Blueprint $table) {
             $table->bigIncrements('id'); // Primaire sleutel, Auto Increment
             $table->unsignedBigInteger('user_id'); // Foreign key naar User tabel
-            $table->string('product')->nullable(); // Store product as a string
-            $table->string('sub_product')->nullable(); // Store sub_product as a string
+            $table->json('product')->nullable(); // Store product as JSON
+            $table->json('sub_product')->nullable(); // Store sub_product as JSON
             $table->timestamp('besteldatum')->default(DB::raw('CURRENT_TIMESTAMP')); // Default: current_timestamp
             $table->string('status', 50)->default('Nieuw'); // Default: 'Nieuw'
             $table->decimal('totaalbedrag', 10, 2)->default(0.00); // Default: 0.00

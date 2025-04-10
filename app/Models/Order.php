@@ -11,8 +11,8 @@ class Order extends Model
 
     protected $fillable = [
         'user_id',
-        'product', // Store as a string
-        'sub_product', // Store as a string
+        'product', // Store as JSON
+        'sub_product', // Store as JSON
         'besteldatum',
         'status',
         'totaalbedrag',
@@ -23,6 +23,8 @@ class Order extends Model
     ];
 
     protected $casts = [
+        'product' => 'array', // Cast product as array
+        'sub_product' => 'array', // Cast sub_product as array
         'besteldatum' => 'datetime',
     ];
 

@@ -16,8 +16,8 @@ class OrderSeeder extends Seeder
         DB::table('orders')->insert([
             [
                 'user_id' => 1, // Ensure this ID exists in the users table
-                'product' => 'Pizza', // Store as plain string
-                'sub_product' => 'Cola', // Store as plain string
+                'product' => json_encode(['Pizza', 'Hamburger']), // Store as JSON array
+                'sub_product' => json_encode(['Cola', 'Fanta']), // Store as JSON array
                 'besteldatum' => Carbon::now(),
                 'status' => 'Nieuw',
                 'totaalbedrag' => 50.00,
@@ -30,8 +30,8 @@ class OrderSeeder extends Seeder
             ],
             [
                 'user_id' => 2, // Ensure this ID exists in the users table
-                'product' => 'Hamburger', // Store as plain string
-                'sub_product' => 'Fanta', // Store as plain string
+                'product' => json_encode(['Friet']), // Store as JSON array
+                'sub_product' => json_encode(['Water']), // Store as JSON array
                 'besteldatum' => Carbon::now()->subDays(1),
                 'status' => 'Verzonden',
                 'totaalbedrag' => 75.50,
@@ -39,20 +39,6 @@ class OrderSeeder extends Seeder
                 'betaalstatus' => 'Betaald',
                 'aantal' => 3,
                 'opmerking' => 'Snelle levering gevraagd',
-                'created_at' => Carbon::now(),
-                'updated_at' => Carbon::now(),
-            ],
-            [
-                'user_id' => 3, // Ensure this ID exists in the users table
-                'product' => 'Friet', // Store as plain string
-                'sub_product' => 'Water', // Store as plain string
-                'besteldatum' => Carbon::now()->subDays(2),
-                'status' => 'Geannuleerd',
-                'totaalbedrag' => 0.00,
-                'betaalmethode' => 'iDEAL',
-                'betaalstatus' => 'Niet betaald',
-                'aantal' => 1,
-                'opmerking' => 'Bestelling geannuleerd door klant',
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
             ],

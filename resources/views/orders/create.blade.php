@@ -20,21 +20,25 @@
         };
 
         function calculateTotal() {
-            const product = document.getElementById('product').value;
-            const subProduct = document.getElementById('sub-product').value;
+            const products = Array.from(document.getElementById('product').selectedOptions).map(option => option.value);
+            const subProducts = Array.from(document.getElementById('sub-product').selectedOptions).map(option => option.value);
             const quantity = parseInt(document.getElementById('quantity').value) || 0;
 
             let total = 0;
 
-            // Add product price
-            if (product && prices.products[product]) {
-                total += prices.products[product] * quantity;
-            }
+            // Add product prices
+            products.forEach(product => {
+                if (product && prices.products[product]) {
+                    total += prices.products[product] * quantity;
+                }
+            });
 
-            // Add subproduct price
-            if (subProduct && prices.subProducts[subProduct]) {
-                total += prices.subProducts[subProduct] * quantity;
-            }
+            // Add subproduct prices
+            subProducts.forEach(subProduct => {
+                if (subProduct && prices.subProducts[subProduct]) {
+                    total += prices.subProducts[subProduct] * quantity;
+                }
+            });
 
             // Update the total price field
             document.getElementById('totaalbedrag').value = total.toFixed(2);
@@ -50,22 +54,22 @@
 
                 <div class="mb-4">
                     <label for="product" class="block font-medium">Product (Eten):</label>
-                    <select id="product" name="product" onchange="calculateTotal()" required class="w-full p-2 border rounded">
-                        <option value="" disabled selected>Selecteer een product</option>
+                    <select id="product" name="product[]" multiple onchange="calculateTotal()" required class="w-full p-2 border rounded">
                         <option value="Pizza">Pizza (€10.00)</option>
                         <option value="Hamburger">Hamburger (€8.50)</option>
                         <option value="Friet">Friet (€5.00)</option>
                     </select>
+                    <small class="text-gray-500">Houd Ctrl of Cmd ingedrukt om meerdere opties te selecteren.</small>
                 </div>
 
                 <div class="mb-4">
                     <label for="sub-product" class="block font-medium">Subproduct (Drinken):</label>
-                    <select id="sub-product" name="sub_product" onchange="calculateTotal()" class="w-full p-2 border rounded">
-                        <option value="" disabled selected>Selecteer een subproduct</option>
+                    <select id="sub-product" name="sub_product[]" multiple onchange="calculateTotal()" class="w-full p-2 border rounded">
                         <option value="Cola">Cola (€2.50)</option>
                         <option value="Fanta">Fanta (€2.50)</option>
                         <option value="Water">Water (€1.50)</option>
                     </select>
+                    <small class="text-gray-500">Houd Ctrl of Cmd ingedrukt om meerdere opties te selecteren.</small>
                 </div>
 
                 <div class="mb-4">
@@ -75,7 +79,7 @@
 
                 <div class="mb-4">
                     <label for="totaalbedrag" class="block font-medium">Totaalbedrag:</label>
-                    <input type="number" id="totaalbedrag" name="totaalbedrag" step="0.01" readonly required class="w-full p-2 border rounded">
+                    <input type="number" id="totaalbedrag" name="totaalbedrag" step="0.01" required class="w-full p-2 border rounded" onkeydown="return false;">
                 </div>
 
                 <div class="mb-4">
@@ -93,6 +97,7 @@
                         <option value="Creditcard">Creditcard</option>
                         <option value="PayPal">PayPal</option>
                         <option value="iDEAL">iDEAL</option>
+                        <option value="Contant">Contant</option>
                     </select>
                 </div>
 
@@ -111,6 +116,12 @@
 
                 <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Create</button>
             </form>
+            <!-- Back to Overview Button -->
+            <div class="mt-6">
+                <a href="{{ route('orders.index') }}" class="inline-block bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600">
+                    Back to Overview
+                </a>
+            </div>
         </div>
     </x-layouts.app>
 </body>
