@@ -1,68 +1,53 @@
-{{-- <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Order Overview</title>
-</head>
-<body>
-    <h1>Order Overview</h1>
+<x-layouts.app :title="__('Orders Overview')">
+    <div class="container mx-auto p-4">
+        <!-- Success Message -->
+        @if (session('success'))
+            <div class="bg-green-100 text-green-800 p-4 rounded mb-4">
+                {{ session('success') }}
+            </div>
+        @endif
 
-    @if (session('error'))
-        <div style="color: red;">
-            {{ session('error') }}
+        <!-- Create Order Button -->
+        <div class="mb-4">
+            <a href="{{ route('orders.create') }}" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
+                Create Order
+            </a>
         </div>
-    @endif
 
-    @if (session('success'))
-        <div style="color: green;">
-            {{ session('success') }}
-        </div>
-    @endif --}}
-    <x-layouts.app :title="__('Dashboard')">
-
-    {{-- <a href="{{ route('orders.create') }}" style="margin-bottom: 20px; display: inline-block;">Create Order</a> --}}
-    <table border="1">
-        <thead>
-            <tr>
-                <th>Besteldatum</th>
-                <th>Product</th>
-                <th>Subproduct</th>
-                <th>Status</th>
-                <th>Totaalbedrag</th>
-                <th>Betaalmethode</th>
-                <th>Betaalstatus</th>
-                <th>Aantal</th>
-                <th>Opmerking</th>
-                <th>Acties</th>
-            </tr>
-        </thead>
-        <tbody>
+        <!-- Orders Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
             @foreach ($orders as $order)
-                <tr>
-                    <td>{{ $order->besteldatum }}</td>
-                    <td>{{ $order->product }}</td>
-                    <td>{{ $order->sub_product }}</td>
-                    <td>{{ $order->status }}</td>
-                    <td>{{ $order->totaalbedrag }}</td>
-                    <td>{{ $order->betaalmethode }}</td>
-                    <td>{{ $order->betaalstatus }}</td>
-                    <td>{{ $order->aantal }}</td>
-                    <td>{{ $order->opmerking }}</td>
-                    <td>
+                <div class="bg-gray-100 dark:bg-gray-800 p-4 rounded shadow border-b border-gray-300 dark:border-gray-700">
+                    <div class="flex justify-between items-center mb-2">
+                        <h2 class="text-lg font-bold">Order ID: {{ $order->id }}</h2>
+                        <span class="text-sm text-gray-500">{{ $order->besteldatum }}</span>
+                    </div>
+                    <div class="mb-2">
+                        <p><strong>Product:</strong> {{ $order->product }}</p>
+                        <p><strong>Subproduct:</strong> {{ $order->sub_product }}</p>
+                        <p><strong>Status:</strong> {{ $order->status }}</p>
+                        <p><strong>Totaalbedrag:</strong> €{{ number_format($order->totaalbedrag, 2) }}</p>
+                        <p><strong>Betaalmethode:</strong> {{ $order->betaalmethode }}</p>
+                        <p><strong>Betaalstatus:</strong> {{ $order->betaalstatus }}</p>
+                        <p><strong>Aantal:</strong> {{ $order->aantal }}</p>
+                        <p><strong>Opmerking:</strong> {{ $order->opmerking }}</p>
+                    </div>
+                    <div class="flex space-x-2">
                         @if (!in_array($order->status, ['In behandeling', 'Verzonden']))
-                            <a href="{{ route('orders.edit', $order->id) }}">Edit</a> |
+                            <a href="{{ route('orders.edit', $order->id) }}" class="bg-yellow-500 text-white px-4 py-2 rounded hover:bg-yellow-600">
+                                Edit
+                            </a>
                         @endif
-                        <form action="{{ route('orders.destroy', $order->id) }}" method="POST" style="display:inline;">
+                        <form action="{{ route('orders.destroy', $order->id) }}" method="POST" onsubmit="return confirm('Weet je zeker dat je deze bestelling wilt verwijderen?')">
                             @csrf
                             @method('DELETE')
-                            <button type="submit">Delete</button>
+                            <button type="submit" class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600">
+                                Delete
+                            </button>
                         </form>
-                    </td>
-                </tr>
+                    </div>
+                </div>
             @endforeach
-        </tbody>
-    </table>
-    </x-layouts.app>
-{{-- </body>
-</html> --}}
+        </div>
+    </div>
+</x-layouts.app>

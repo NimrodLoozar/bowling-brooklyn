@@ -1,64 +1,76 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Edit Order</title>
-</head>
-<body>
-    <h1>Edit Order</h1>
-    <form action="{{ route('orders.update', $order) }}" method="POST">
-        @csrf
-        @method('PUT')
+<x-layouts.app :title="__('Edit Order')">
+    <div class="container mx-auto p-4">
+        <h1 class="text-2xl font-bold mb-4">Edit Order</h1>
+        <form action="{{ route('orders.update', $order) }}" method="POST" class="bg-gray-100 dark:bg-gray-800 p-4 rounded shadow">
+            @csrf
+            @method('PUT')
 
-        <label>Product (Eten):</label>
-        <select id="product" name="product" required>
-            <option value="Pizza" {{ $order->product == 'Pizza' ? 'selected' : '' }}>Pizza</option>
-            <option value="Hamburger" {{ $order->product == 'Hamburger' ? 'selected' : '' }}>Hamburger</option>
-            <option value="Friet" {{ $order->product == 'Friet' ? 'selected' : '' }}>Friet</option>
-        </select><br>
+            <div class="mb-4">
+                <label for="product" class="block font-medium">Product (Eten):</label>
+                <select id="product" name="product" required class="w-full p-2 border rounded">
+                    <option value="Pizza" {{ $order->product == 'Pizza' ? 'selected' : '' }}>Pizza (€10.00)</option>
+                    <option value="Hamburger" {{ $order->product == 'Hamburger' ? 'selected' : '' }}>Hamburger (€8.50)</option>
+                    <option value="Friet" {{ $order->product == 'Friet' ? 'selected' : '' }}>Friet (€5.00)</option>
+                </select>
+            </div>
 
-        <label>Subproduct (Drinken):</label>
-        <select id="sub-product" name="sub_product">
-            <option value="" disabled>Selecteer een subproduct</option>
-            <option value="Cola" {{ $order->sub_product == 'Cola' ? 'selected' : '' }}>Cola</option>
-            <option value="Fanta" {{ $order->sub_product == 'Fanta' ? 'selected' : '' }}>Fanta</option>
-            <option value="Water" {{ $order->sub_product == 'Water' ? 'selected' : '' }}>Water</option>
-        </select><br>
+            <div class="mb-4">
+                <label for="sub-product" class="block font-medium">Subproduct (Drinken):</label>
+                <select id="sub-product" name="sub_product" class="w-full p-2 border rounded">
+                    <option value="" disabled>Selecteer een subproduct</option>
+                    <option value="Cola" {{ $order->sub_product == 'Cola' ? 'selected' : '' }}>Cola (€2.50)</option>
+                    <option value="Fanta" {{ $order->sub_product == 'Fanta' ? 'selected' : '' }}>Fanta (€2.50)</option>
+                    <option value="Water" {{ $order->sub_product == 'Water' ? 'selected' : '' }}>Water (€1.50)</option>
+                </select>
+            </div>
 
-        <label>Besteldatum:</label>
-        <input type="date" name="besteldatum" value="{{ $order->besteldatum->format('Y-m-d') }}" required><br>
+            <div class="mb-4">
+                <label for="besteldatum" class="block font-medium">Besteldatum:</label>
+                <input type="date" name="besteldatum" value="{{ $order->besteldatum->format('Y-m-d') }}" required class="w-full p-2 border rounded">
+            </div>
 
-        <label>Status:</label>
-        <select name="status" required>
-            <option value="Nieuw" {{ $order->status == 'Nieuw' ? 'selected' : '' }}>Nieuw</option>
-            <option value="Verzonden" {{ $order->status == 'Verzonden' ? 'selected' : '' }}>Verzonden</option>
-            <option value="Geannuleerd" {{ $order->status == 'Geannuleerd' ? 'selected' : '' }}>Geannuleerd</option>
-        </select><br>
+            <div class="mb-4">
+                <label for="status" class="block font-medium">Status:</label>
+                <select name="status" required class="w-full p-2 border rounded">
+                    <option value="Nieuw" {{ $order->status == 'Nieuw' ? 'selected' : '' }}>Nieuw</option>
+                    <option value="Verzonden" {{ $order->status == 'Verzonden' ? 'selected' : '' }}>Verzonden</option>
+                    <option value="Geannuleerd" {{ $order->status == 'Geannuleerd' ? 'selected' : '' }}>Geannuleerd</option>
+                </select>
+            </div>
 
-        <label>Totaalbedrag:</label>
-        <input type="number" step="0.01" name="totaalbedrag" value="{{ $order->totaalbedrag }}" required><br>
+            <div class="mb-4">
+                <label for="totaalbedrag" class="block font-medium">Totaalbedrag:</label>
+                <input type="number" step="0.01" name="totaalbedrag" value="{{ $order->totaalbedrag }}" required class="w-full p-2 border rounded">
+            </div>
 
-        <label>Betaalmethode:</label>
-        <select name="betaalmethode">
-            <option value="Creditcard" {{ $order->betaalmethode == 'Creditcard' ? 'selected' : '' }}>Creditcard</option>
-            <option value="PayPal" {{ $order->betaalmethode == 'PayPal' ? 'selected' : '' }}>PayPal</option>
-            <option value="iDEAL" {{ $order->betaalmethode == 'iDEAL' ? 'selected' : '' }}>iDEAL</option>
-        </select><br>
+            <div class="mb-4">
+                <label for="betaalmethode" class="block font-medium">Betaalmethode:</label>
+                <select name="betaalmethode" class="w-full p-2 border rounded">
+                    <option value="Creditcard" {{ $order->betaalmethode == 'Creditcard' ? 'selected' : '' }}>Creditcard</option>
+                    <option value="PayPal" {{ $order->betaalmethode == 'PayPal' ? 'selected' : '' }}>PayPal</option>
+                    <option value="iDEAL" {{ $order->betaalmethode == 'iDEAL' ? 'selected' : '' }}>iDEAL</option>
+                </select>
+            </div>
 
-        <label>Betaalstatus:</label>
-        <select name="betaalstatus" required>
-            <option value="Niet betaald" {{ $order->betaalstatus == 'Niet betaald' ? 'selected' : '' }}>Niet betaald</option>
-            <option value="Betaald" {{ $order->betaalstatus == 'Betaald' ? 'selected' : '' }}>Betaald</option>
-        </select><br>
+            <div class="mb-4">
+                <label for="betaalstatus" class="block font-medium">Betaalstatus:</label>
+                <select name="betaalstatus" required class="w-full p-2 border rounded">
+                    <option value="Niet betaald" {{ $order->betaalstatus == 'Niet betaald' ? 'selected' : '' }}>Niet betaald</option>
+                    <option value="Betaald" {{ $order->betaalstatus == 'Betaald' ? 'selected' : '' }}>Betaald</option>
+                </select>
+            </div>
 
-        <label>Aantal:</label>
-        <input type="number" name="aantal" value="{{ $order->aantal }}" required><br>
+            <div class="mb-4">
+                <label for="aantal" class="block font-medium">Aantal:</label>
+                <input type="number" name="aantal" value="{{ $order->aantal }}" required class="w-full p-2 border rounded">
+            </div>
 
-        <label>Opmerking:</label>
-        <textarea name="opmerking">{{ $order->opmerking }}</textarea><br>
+            <div class="mb-4">
+                <label for="opmerking" class="block font-medium">Opmerking:</label>
+                <textarea name="opmerking" class="w-full p-2 border rounded">{{ $order->opmerking }}</textarea>
+            </div>
 
-        <button type="submit">Update</button>
-    </form>
-</body>
-</html>
+            <button type="submit" class="bg-yellow-500 text-white px-4 py-2 rounded hover:bg-yellow-600">Update</button>
+        </form>
+    </div>
+</x-layouts.app>
