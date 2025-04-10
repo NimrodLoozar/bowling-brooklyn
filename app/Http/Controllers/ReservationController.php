@@ -7,14 +7,13 @@ use Illuminate\Http\Request;
 class ReservationController extends Controller
 {
     public function index()
-    {
-        // Logic to display reservations
+    {   
+        $reservations = Reservation::with(['user', 'lane'])->get();
         return view('reservations.index');
     }
 
     public function create()
     {
-        // Logic to show reservation form
         return view('reservations.create');
     }
 

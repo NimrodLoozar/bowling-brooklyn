@@ -27,10 +27,14 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('scores', [ScoresController::class, 'index'])->name('scores.index');
     Route::get('lanes', [LaneController::class, 'index'])->name('lanes');
-    Route::get('reservations', [ReservationController::class, 'index'])->name('reservations');
+    
 });
 
 // Contacts
 Route::resource('contacts', ContactController::class);
+
+// reservations
+Route::get('reservations/create', [ReservationController::class, 'create'])->name('reservations.create');
+Route::get('/reservations', [ReservationController::class, 'index'])->name('reservations.index');
 
 require __DIR__ . '/auth.php';
