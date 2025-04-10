@@ -21,7 +21,7 @@ class DatabaseSeeder extends Seeder
         Lane::factory(10)->create();
 
         Reservation::factory()
-        ->count(5)
+        ->count(50)
         ->create()
         ->each(function ($reservation) {
             // Voeg altijd de creator toe als participant
