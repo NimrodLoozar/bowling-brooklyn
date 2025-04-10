@@ -13,14 +13,18 @@ class ScoresController extends Controller
 {
     public function index()
     {
+        // $scores = DB::table('scores')->select('scores.*')->get();
+
         $scores = DB::table('scores')
-            ->join('lanes', 'scores.lane_id', '=', 'lanes.id')
-            ->join('users', 'scores.user_id', '=', 'users.id')
-            ->join('reservations', 'scores.reservation_id', '=', 'reservations.id')
-            ->select('scores.*', 'lanes.name as lane_name', 'users.name as user_name', 'reservations.date as reservation_date')
+            ->join('reservations', 'scores.reservations_id', '=', 'reservations.id')
+            ->join('lanes', 'reservations.lane_id', '=', 'lanes.id')
+            ->join('users', 'reservations.user_id', '=', 'users.id')
+            ->select('scores.*', 'lanes.*', 'users.*', 'reservations.*')
             ->get();
 
-        return view('scores.index', compact('scores', 'lanes', 'users', 'reservations'));
+        return view('scores.index', compact('scores'
+        // , 'lanes', 'users', 'reservations'
+    ));
     }
 
     public function create()

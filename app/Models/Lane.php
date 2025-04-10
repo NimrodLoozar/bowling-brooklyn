@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Lane extends Model
 {
+    use HasFactory;
     protected $fillable = [
         'lane_number',
         'lane_type',

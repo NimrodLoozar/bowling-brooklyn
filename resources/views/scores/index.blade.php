@@ -3,7 +3,9 @@
         <div class="grid auto-rows-min gap-4 md:grid-cols-3">
             @foreach ($scores as $score)
             <div class="relative aspect-video overflow-hidden rounded-xl border border-neutral-200 dark:border-neutral-700">
-                {{ $score->name }}
+                <p>{{ $score->name}}</p>
+                <p>{{ $score->reservations_id }}</p>
+                <p>1. {{ $score->score}}</p>
             </div>
                 
             @endforeach
