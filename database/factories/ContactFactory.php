@@ -2,44 +2,29 @@
 
 namespace Database\Factories;
 
-use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Support\Facades\Schema;
+use Illuminate\Database\Eloquent\Factories\Factory;
 
-return new class extends Migration
+class ContactFactory extends Factory
 {
     /**
-     * Run the migrations.
+     * Define the model's default state.
+     *
+     * @return array
      */
-    public function up(): void
+    public function definition()
     {
-        Schema::create('contacts', function (Blueprint $table) {
-            $table->unsignedInteger('id')->autoIncrement();
-            $table->unsignedInteger('user_id')->nullable()->comment('Persoon_ID');
-            $table->string('email', 255);
-            $table->string('telefoon', 20)->nullable();
-            $table->string('mobiel', 20)->nullable();
-            $table->string('adres', 255)->nullable();
-            $table->string('postcode', 10)->nullable();
-            $table->string('plaats', 100)->nullable();
-            $table->string('land', 100)->nullable();
-            $table->text('notitie')->nullable();
-            $table->dateTime('aanmaakdatum', 6);
-            $table->dateTime('bewerkingsdatum', 6);
-            
-            // Foreign key constraint
-            $table->foreign('user_id')->references('id')->on('users');
-            
-            // Timestamps
-            $table->timestamps(); // Optional: Laravel's default created_at and updated_at
-        });
+        return [
+            'user_id' => null, // Will be overridden when needed
+            'email' => $this->faker->unique()->safeEmail(),
+            'phone' => $this->faker->phoneNumber(),
+            'mobile' => $this->faker->phoneNumber(),
+            'address' => $this->faker->streetAddress(),
+            'postal_code' => $this->faker->postcode(),
+            'city' => $this->faker->city(),
+            'country' => $this->faker->country(),
+            'notes' => $this->faker->paragraph(),
+            'created_at' => $this->faker->dateTimeBetween('-1 year', 'now'),
+            'updated_at' => $this->faker->dateTimeBetween('-1 year', 'now'),
+        ];
     }
-
-    /**
-     * Reverse the migrations.
-     */
-    public function down(): void
-    {
-        Schema::dropIfExists('contacts');
-    }
-};
+}

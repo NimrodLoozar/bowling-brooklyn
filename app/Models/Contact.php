@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 
 class Contact extends Model
 {
@@ -11,22 +13,16 @@ class Contact extends Model
 
     /**
      * The table associated with the model.
-     *
-     * @var string
      */
     protected $table = 'contacts';
 
     /**
      * The primary key for the model.
-     *
-     * @var string
      */
     protected $primaryKey = 'id';
 
     /**
      * The attributes that are mass assignable.
-     *
-     * @var array
      */
     protected $fillable = [
         'user_id',
@@ -42,8 +38,6 @@ class Contact extends Model
 
     /**
      * The attributes that should be cast.
-     *
-     * @var array
      */
     protected $casts = [
         'created_at' => 'datetime',
@@ -51,10 +45,48 @@ class Contact extends Model
     ];
 
     /**
-     * Get the user associated with this contact.
+     * The model's default values for attributes.
      */
-    public function user()
+    protected $attributes = [
+        'notes' => null,
+    ];
+
+    /**
+     * Get the user associated with the contact.
+     */
+    public function user(): BelongsTo
     {
-        return $this->belongsTo(User::class, 'user_id');
+        return $this->belongsTo(User::class);
+    }
+
+    /**
+     * Interact with the contact's full address.
+     */
+    protected function fullAddress(): Attribute
+    {
+        return Attribute::make(
+            get: fn () => implode(', ', array_filter([
+                $this->address,
+                $this->city,
+                $this->postal_code,
+                $this->country,
+            ])),
+        );
+    }
+
+    /**
+     * Scope a query to only include contacts from a specific country.
+     */
+    public function scopeCountry($query, string $country)
+    {
+        return $query->where('country', $country);
+    }
+
+    /**
+     * Scope a query to only include contacts with mobile numbers.
+     */
+    public function scopeWithMobile($query)
+    {
+        return $query->whereNotNull('mobile');
     }
 }
