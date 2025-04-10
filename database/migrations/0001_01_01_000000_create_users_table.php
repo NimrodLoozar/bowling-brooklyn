@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('first_name', 255)->nullable();
             $table->string('middle_name', 100)->nullable();
             $table->string('last_name', 255)->nullable();
-            $table->tinyInteger('role')->default(1);
+            $table->string('role', 50)->default('user');
             $table->timestamp('logged_in_at')->nullable();
             $table->string('token', 100)->nullable();
             $table->rememberToken();
