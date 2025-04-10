@@ -39,19 +39,25 @@ class ReservationController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'user_id' => 'required|exists:users,id',
+            'user_name' => 'required|string|max:255', // Verander van user_id naar user_name
             'lane_id' => 'required|exists:lanes,id',
             'date' => 'required|date',
-            'start_time' => 'required|date_format:H:i:s',
-            'end_time' => 'required|date_format:H:i:s|after:start_time',
+            'start_time' => 'required|date_format:H:i:s', // Zorg ervoor dat start_time het juiste formaat heeft
+            'end_time' => 'required|date_format:H:i:s|after:start_time', // Zorg ervoor dat end_time na start_time is
             'number_of_people' => 'required|integer|min:1',
-            'status' => 'nullable|string|max:50',
-            'cost' => 'nullable|numeric|min:0',
-            'paid' => 'boolean',
             'note' => 'nullable|string',
         ]);
 
-        Reservation::create($validated);
+        // Zoek de gebruiker op basis van de naam
+        $user = User::where('name', $request->user_name)->first();
+        if (!$user) {
+            return redirect()->back()->withErrors(['user_name' => 'User not found.']);
+        }
+
+        // Maak de reservering aan
+        $reservation = new Reservation($validated);
+        $reservation->user_id = $user->id; // Gebruik de gevonden gebruiker
+        $reservation->save();
 
         return redirect()->route('reservations.index')->with('success', 'Reservation created successfully.');
     }

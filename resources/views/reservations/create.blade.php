@@ -32,14 +32,10 @@
         <form action="{{ route('reservations.store') }}" method="POST">
             @csrf
 
+            <!-- User Name (changed to text input) -->
             <div class="mb-4">
-                <label for="user_id" class="block text-sm font-medium text-gray-700">User</label>
-                <select id="user_id" name="user_id" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500" required>
-                    <option value="">Select User</option>
-                    @foreach($users as $user)
-                        <option value="{{ $user->id }}">{{ $user->name }}</option>
-                    @endforeach
-                </select>
+                <label for="user_name" class="block text-sm font-medium text-gray-700">First & last name</label>
+                <input type="text" id="user_name" name="user_name" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500" required>
             </div>
 
             <div class="mb-4">
@@ -72,20 +68,7 @@
                 <input type="number" id="number_of_people" name="number_of_people" value="1" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500" min="1" required>
             </div>
 
-            <div class="mb-4">
-                <label for="status" class="block text-sm font-medium text-gray-700">Status</label>
-                <input type="text" id="status" name="status" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500">
-            </div>
-
-            <div class="mb-4">
-                <label for="cost" class="block text-sm font-medium text-gray-700">Cost</label>
-                <input type="number" id="cost" name="cost" step="0.01" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500">
-            </div>
-
-            <div class="mb-4">
-                <label for="paid" class="block text-sm font-medium text-gray-700">Paid</label>
-                <input type="checkbox" id="paid" name="paid" class="mt-1 block">
-            </div>
+            <!-- Removed status, cost, and paid fields -->
 
             <div class="mb-4">
                 <label for="note" class="block text-sm font-medium text-gray-700">Note</label>
