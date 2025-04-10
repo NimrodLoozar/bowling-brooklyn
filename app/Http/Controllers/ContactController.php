@@ -70,7 +70,6 @@ class ContactController extends Controller
     {
         $validated = $request->validate([
             'user_id' => 'nullable|exists:users,id',
-            'email' => 'required|email|max:255|unique:contacts,email,'.$contact->id,
             'mobile' => 'nullable|string|max:20',
             'address' => 'nullable|string|max:255',
             'postal_code' => 'nullable|string|max:10',
