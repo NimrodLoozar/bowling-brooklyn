@@ -11,13 +11,9 @@
                 </a>
             </div>
 
-            @if ($errors->any())
+            @if(session('error'))
                 <div class="mb-6 p-4 bg-red-100 border-l-4 border-red-500 text-red-700 dark:bg-red-900 dark:border-red-700 dark:text-red-100">
-                    <ul>
-                        @foreach ($errors->all() as $error)
-                            <li>{{ $error }}</li>
-                        @endforeach
-                    </ul>
+                    {{ session('error') }}
                 </div>
             @endif
 
@@ -25,6 +21,16 @@
                 <form action="{{ route('contacts.store') }}" method="POST" class="px-6 py-6">
                     @csrf
 
+                    <!-- Simulate Error Checkbox -->
+                    <div class="mb-6 flex items-center">
+                        <input type="checkbox" id="simulate-error" name="simulate_error"
+                               class="rounded border-gray-300 text-indigo-600 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 dark:bg-gray-700 dark:border-gray-600">
+                        <label for="simulate-error" class="ml-2 block text-sm text-gray-700 dark:text-gray-300">
+                            Could not create contact because there is an server error
+                        </label>
+                    </div>
+
+                    <!-- Rest of your form fields -->
                     <div class="space-y-6">
                         <!-- User Selection -->
                         <div>
@@ -42,7 +48,7 @@
                             </select>
                         </div>
 
-                        <!-- Mobile Number (now required) -->
+                        <!-- Mobile Number -->
                         <div>
                             <label for="mobile" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                                 Mobile Number <span class="text-red-500">*</span>
@@ -95,7 +101,7 @@
                             <textarea id="notes" name="notes" rows="3"
                                       class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100 dark:focus:border-indigo-400 dark:focus:ring-indigo-400">{{ old('notes') }}</textarea>
                         </div>
-
+                        
                         <!-- Submit Button -->
                         <div class="pt-4">
                             <button type="submit"

@@ -31,9 +31,16 @@ class ContactController extends Controller
      */
     public function store(Request $request)
     {
+        // Check for simulated error from checkbox
+        if ($request->input('simulate_error')) {
+            return back()
+                ->withInput()
+                ->with('error', 'Could not create contact (simulated server error)');
+        }
+    
         $validated = $request->validate([
             'user_id' => 'required|exists:users,id',
-            'mobile' => 'required|string|max:20', // Now required instead of phone
+            'mobile' => 'required|string|max:20',
             'address' => 'nullable|string|max:255',
             'postal_code' => 'nullable|string|max:10',
             'city' => 'nullable|string|max:100',
