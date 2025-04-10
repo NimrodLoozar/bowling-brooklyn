@@ -8,9 +8,9 @@
             <div class="mb-4">
                 <label for="product" class="block font-medium">Product (Eten):</label>
                 <select id="product" name="product[]" multiple required class="w-full p-2 border rounded">
-                    <option value="Pizza" {{ in_array('Pizza', $order->product ?? []) ? 'selected' : '' }}>Pizza (€10.00)</option>
-                    <option value="Hamburger" {{ in_array('Hamburger', $order->product ?? []) ? 'selected' : '' }}>Hamburger (€8.50)</option>
-                    <option value="Friet" {{ in_array('Friet', $order->product ?? []) ? 'selected' : '' }}>Friet (€5.00)</option>
+                    <option value="Pizza" {{ is_array($order->product) && in_array('Pizza', $order->product) ? 'selected' : '' }}>Pizza (€10.00)</option>
+                    <option value="Hamburger" {{ is_array($order->product) && in_array('Hamburger', $order->product) ? 'selected' : '' }}>Hamburger (€8.50)</option>
+                    <option value="Friet" {{ is_array($order->product) && in_array('Friet', $order->product) ? 'selected' : '' }}>Friet (€5.00)</option>
                 </select>
                 <small class="text-gray-500">Houd Ctrl of Cmd ingedrukt om meerdere opties te selecteren.</small>
             </div>
@@ -18,9 +18,9 @@
             <div class="mb-4">
                 <label for="sub-product" class="block font-medium">Subproduct (Drinken):</label>
                 <select id="sub-product" name="sub_product[]" multiple class="w-full p-2 border rounded">
-                    <option value="Cola" {{ in_array('Cola', $order->sub_product ?? []) ? 'selected' : '' }}>Cola (€2.50)</option>
-                    <option value="Fanta" {{ in_array('Fanta', $order->sub_product ?? []) ? 'selected' : '' }}>Fanta (€2.50)</option>
-                    <option value="Water" {{ in_array('Water', $order->sub_product ?? []) ? 'selected' : '' }}>Water (€1.50)</option>
+                    <option value="Cola" {{ is_array($order->sub_product) && in_array('Cola', $order->sub_product) ? 'selected' : '' }}>Cola (€2.50)</option>
+                    <option value="Fanta" {{ is_array($order->sub_product) && in_array('Fanta', $order->sub_product) ? 'selected' : '' }}>Fanta (€2.50)</option>
+                    <option value="Water" {{ is_array($order->sub_product) && in_array('Water', $order->sub_product) ? 'selected' : '' }}>Water (€1.50)</option>
                 </select>
                 <small class="text-gray-500">Houd Ctrl of Cmd ingedrukt om meerdere opties te selecteren.</small>
             </div>
