@@ -10,6 +10,7 @@ use App\Livewire\Settings\Profile;
 use Illuminate\Support\Facades\Route;
 
 
+
 Route::get('/', function () {
     return view('welcome');
 })->name('home');
@@ -36,5 +37,8 @@ Route::resource('contacts', ContactController::class);
 // reservations
 Route::get('reservations/create', [ReservationController::class, 'create'])->name('reservations.create');
 Route::get('/reservations', [ReservationController::class, 'index'])->name('reservations.index');
+Route::get('reservations/{reservation}', [ReservationController::class, 'show']);
+
+Route::resource('reservations', ReservationController::class);
 
 require __DIR__ . '/auth.php';
