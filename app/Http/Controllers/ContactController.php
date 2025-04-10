@@ -35,9 +35,9 @@ class ContactController extends Controller
         if ($request->input('simulate_error')) {
             return back()
                 ->withInput()
-                ->with('error', 'Could not create contact (simulated server error)');
+                ->with('error', 'Could not get data from server, try again later. ');
         }
-    
+
         $validated = $request->validate([
             'user_id' => 'required|exists:users,id',
             'mobile' => 'required|string|max:20',
@@ -47,9 +47,9 @@ class ContactController extends Controller
             'country' => 'nullable|string|max:100',
             'notes' => 'nullable|string',
         ]);
-    
+
         Contact::create($validated);
-    
+
         return redirect()->route('contacts.index')
             ->with('success', 'Contact created successfully.');
     }
@@ -80,9 +80,9 @@ class ContactController extends Controller
         if ($request->has('simulate_error')) {
             return back()
                 ->withInput()
-                ->with('error', 'Could not update contact (simulated server error)');
-        }    
-    
+                ->with('error', 'Could not get data from server, try again later.');
+        }
+
         $validated = $request->validate([
             'user_id' => 'required|exists:users,id',
             'mobile' => 'nullable|string|max:20',
@@ -92,9 +92,9 @@ class ContactController extends Controller
             'country' => 'nullable|string|max:100',
             'notes' => 'nullable|string',
         ]);
-    
+
         $contact->update($validated);
-    
+
         return redirect()->route('contacts.index')
             ->with('success', 'Contact updated successfully.');
     }
@@ -102,24 +102,18 @@ class ContactController extends Controller
     /**
      * Remove the specified contact.
      */
-    public function destroy(Contact $contact)
-{
-    if (request()->has('simulate_error')) {
-        return redirect()->route('contacts.index')
-            ->with('error', 'Could not delete contact (simulated server error)');
-    }
+    // ContactController.php
 
-    try {
+    public function destroy(Contact $contact, Request $request)
+    {
+        if ($request->has('simulate_error')) {
+            return redirect()->route('contacts.index')
+                ->with('error', 'Could not delete contact because you do not have the correct rights');
+        }
+
         $contact->delete();
+
         return redirect()->route('contacts.index')
-            ->with('success', 'Contact deleted successfully.');
-    } catch (\Exception $e) {
-        // Log the actual error
-        \Log::error('Contact deletion failed: ' . $e->getMessage());
-        
-        // Return user-friendly error message
-        return redirect()->route('contacts.index')
-            ->with('error', 'This contact could not be deleted. It may be referenced by other records.');
+            ->with('success', 'Contact deleted successfully');
     }
-}
 }

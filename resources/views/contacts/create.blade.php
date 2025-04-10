@@ -26,7 +26,7 @@
                         <input type="checkbox" id="simulate-error" name="simulate_error"
                                class="rounded border-gray-300 text-indigo-600 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 dark:bg-gray-700 dark:border-gray-600">
                         <label for="simulate-error" class="ml-2 block text-sm text-gray-700 dark:text-gray-300">
-                            Could not create contact because there is an server error
+                            Simulate server error (for devs) 
                         </label>
                     </div>
 

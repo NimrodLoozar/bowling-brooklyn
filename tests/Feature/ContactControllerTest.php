@@ -105,7 +105,7 @@ class ContactControllerTest extends TestCase
 
         // Assert
         $response->assertRedirect();
-        $response->assertSessionHas('error', 'Could not create contact (simulated server error)');
+        $response->assertSessionHas('error', 'Could not get data from server, try again later. ');
         // Expecting at least one field to be in old input, e.g., "mobile"
         $response->assertSessionHasInput(['mobile']);
     }
@@ -201,7 +201,7 @@ class ContactControllerTest extends TestCase
 
         // Assert
         $response->assertRedirect();
-        $response->assertSessionHas('error', 'Could not update contact (simulated server error)');
+        $response->assertSessionHas('error', 'Could not get data from server, try again later.');
         // Provide expected keys for session input; adjust as necessary.
         $response->assertSessionHasInput(['mobile']);
     }
@@ -222,7 +222,7 @@ class ContactControllerTest extends TestCase
             'id' => $contact->id,
         ]);
         $response->assertRedirect(route('contacts.index'));
-        $response->assertSessionHas('success', 'Contact deleted successfully.');
+        $response->assertSessionHas('success', 'Contact deleted successfully');
     }
 
     /**
@@ -241,6 +241,6 @@ class ContactControllerTest extends TestCase
             'id' => $contact->id,
         ]);
         $response->assertRedirect(route('contacts.index'));
-        $response->assertSessionHas('error', 'Could not delete contact (simulated server error)');
+        $response->assertSessionHas('error', 'Could not delete contact because you do not have the correct rights');
     }
 }
