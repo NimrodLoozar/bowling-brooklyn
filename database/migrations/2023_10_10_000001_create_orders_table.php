@@ -20,8 +20,8 @@ return new class extends Migration
             $table->string('betaalmethode', 50)->nullable(); // Nullable
             $table->string('betaalstatus', 20)->default('Niet betaald'); // Default: 'Niet betaald'
             $table->unsignedInteger('aantal'); // Niet nullable
-            $table->text('opmerking', 65535)->nullable(); // Nullable
-            $table->timestamp();
+            $table->text('opmerking')->nullable(); // Nullable
+            $table->timestamps(); // Adds created_at and updated_at columns
             // Foreign key constraints
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
