@@ -3,40 +3,58 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Score;
+use App\Models\Lane;
+use App\Models\User;
+use App\Models\Reservation;
+use Illuminate\Support\Facades\DB;
 
 class ScoresController extends Controller
 {
     public function index()
     {
-        // Fetch all scores from the database
-        $scores = \App\Models\Score::all();
+        $scores = DB::table('scores')
+            ->join('lanes', 'scores.lane_id', '=', 'lanes.id')
+            ->join('users', 'scores.user_id', '=', 'users.id')
+            ->join('reservations', 'scores.reservation_id', '=', 'reservations.id')
+            ->select('scores.*', 'lanes.name as lane_name', 'users.name as user_name', 'reservations.date as reservation_date')
+            ->get();
 
-        // Return the scores to the view
-        return view('scores.index', compact('scores'));
+        return view('scores.index', compact('scores', 'lanes', 'users', 'reservations'));
     }
 
     public function create()
     {
-        // Show the form to create a new score
+        // Logic to show score creation form
         return view('scores.create');
     }
 
     public function store(Request $request)
     {
-        // Validate and store the new score
-        $validatedData = $request->validate([
-            'reservations_id' => 'required|exists:reservations,id',
-            'score' => 'required|integer|min:0|max:100',
-            'player_name' => 'required|string|max:100',
-            'round' => 'nullable|integer|min:1',
-            'date' => 'required|date',
-            'time' => 'nullable|date_format:H:i',
-            'comment' => 'nullable|string|max:255',
-            'validated' => 'boolean',
-        ]);
+        // Logic to store a new score
+        // Validate and save the score data
+    }
 
-        \App\Models\Score::create($validatedData);
+    public function show($id)
+    {
+        // Logic to display a specific score
+        return view('scores.show', compact('id'));
+    }
 
-        return redirect()->route('scores.index')->with('success', 'Score created successfully.');
+    public function edit($id)
+    {
+        // Logic to show edit form for a specific score
+        return view('scores.edit', compact('id'));
+    }
+
+    public function update(Request $request, $id)
+    {
+        // Logic to update a specific score
+        // Validate and update the score data
+    }
+
+    public function destroy($id)
+    {
+        // Logic to delete a specific score
     }
 }

@@ -6,21 +6,21 @@ use Illuminate\Database\Eloquent\Model;
 
 class Score extends Model
 {
-    protected $table = 'scores';
-
     protected $fillable = [
-        'reservations_id',
+        'user_id',
+        'lane_id',
         'score',
-        'player_name',
-        'round',
-        'date',
-        'time',
-        'comment',
-        'validated',
+        'created_at',
+        'updated_at',
     ];
 
-    public function reservation()
+    public function lane()
     {
-        return $this->belongsTo(Reservation::class, 'reservations_id');
+        return $this->belongsTo(Lane::class);
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 }

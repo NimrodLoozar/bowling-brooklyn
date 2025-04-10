@@ -3,26 +3,25 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Lane extends Model
 {
-    protected $table = 'lanes';
-
     protected $fillable = [
-        'name',
-        'location',
-        'capacity',
+        'lane_number',
+        'lane_type',
         'status',
-        'comment',
-        'validated',
+        'created_at',
+        'updated_at',
     ];
 
     public function reservations()
     {
-        return $this->hasMany(Reservation::class, 'lane_id');
+        return $this->hasMany(Reservation::class);
     }
+
     public function scores()
     {
-        return $this->hasManyThrough(Score::class, Reservation::class, 'lane_id', 'reservations_id');
+        return $this->hasMany(Score::class);
     }
 }

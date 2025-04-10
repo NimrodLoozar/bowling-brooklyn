@@ -8,33 +8,42 @@ class LaneController extends Controller
 {
     public function index()
     {
-        // Fetch all lanes from the database
-        $lanes = \App\Models\Lane::all();
-
-        // Return the lanes to the view
-        return view('lanes.index', compact('lanes'));
+        // Logic to display lanes
+        return view('lanes.index');
     }
 
     public function create()
     {
-        // Show the form to create a new lane
+        // Logic to show lane creation form
         return view('lanes.create');
     }
 
     public function store(Request $request)
     {
-        // Validate and store the new lane
-        $validatedData = $request->validate([
-            'name' => 'required|string|max:100',
-            'location' => 'required|string|max:255',
-            'capacity' => 'required|integer|min:1',
-            'status' => 'required|string|max:50',
-            'comment' => 'nullable|string|max:255',
-            'validated' => 'boolean',
-        ]);
+        // Logic to store a new lane
+        // Validate and save the lane data
+    }
 
-        \App\Models\Lane::create($validatedData);
+    public function show($id)
+    {
+        // Logic to display a specific lane
+        return view('lanes.show', compact('id'));
+    }
 
-        return redirect()->route('lanes.index')->with('success', 'Lane created successfully.');
+    public function edit($id)
+    {
+        // Logic to show edit form for a specific lane
+        return view('lanes.edit', compact('id'));
+    }
+
+    public function update(Request $request, $id)
+    {
+        // Logic to update a specific lane
+        // Validate and update the lane data
+    }
+
+    public function destroy($id)
+    {
+        // Logic to delete a specific lane
     }
 }

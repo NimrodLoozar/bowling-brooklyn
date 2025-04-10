@@ -8,34 +8,42 @@ class ReservationController extends Controller
 {
     public function index()
     {
-        // Fetch all reservations from the database
-        $reservations = \App\Models\Reservation::all();
-
-        // Return the reservations to the view
-        return view('reservations.index', compact('reservations'));
+        // Logic to display reservations
+        return view('reservations.index');
     }
 
     public function create()
     {
-        // Show the form to create a new reservation
+        // Logic to show reservation form
         return view('reservations.create');
     }
 
     public function store(Request $request)
     {
-        // Validate and store the new reservation
-        $validatedData = $request->validate([
-            'user_id' => 'required|exists:users,id',
-            'lane_id' => 'required|exists:lanes,id',
-            'start_time' => 'required|date_format:Y-m-d H:i:s',
-            'end_time' => 'required|date_format:Y-m-d H:i:s|after:start_time',
-            'status' => 'required|string|max:50',
-            'comment' => 'nullable|string|max:255',
-            'validated' => 'boolean',
-        ]);
+        // Logic to store reservation
+        // Validate and save the reservation data
+    }
 
-        \App\Models\Reservation::create($validatedData);
+    public function show($id)
+    {
+        // Logic to display a specific reservation
+        return view('reservations.show', compact('id'));
+    }
 
-        return redirect()->route('reservations.index')->with('success', 'Reservation created successfully.');
+    public function edit($id)
+    {
+        // Logic to show edit form for a specific reservation
+        return view('reservations.edit', compact('id'));
+    }
+
+    public function update(Request $request, $id)
+    {
+        // Logic to update a specific reservation
+        // Validate and update the reservation data
+    }
+
+    public function destroy($id)
+    {
+        // Logic to delete a specific reservation
     }
 }
