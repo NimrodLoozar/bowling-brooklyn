@@ -37,6 +37,7 @@ Route::resource('contacts', ContactController::class);
 // reservations
 Route::get('reservations/create', [ReservationController::class, 'create'])->name('reservations.create');
 Route::get('/reservations', [ReservationController::class, 'index'])->name('reservations.index');
+Route::delete('/reservations/{id}', [ReservationController::class, 'destroy'])->name('reservations.destroy');
 Route::get('reservations/{reservation}', [ReservationController::class, 'show']);
 
 Route::resource('reservations', ReservationController::class);

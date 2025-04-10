@@ -102,10 +102,16 @@ class ReservationController extends Controller
     /**
      * Remove the specified reservation from storage.
      */
-    public function destroy(Reservation $reservation)
+    public function destroy($id)
     {
-        $reservation->delete();
-
-        return response()->json(['message' => 'Reservation deleted successfully.']);
+        try {
+            $reservation = Reservation::findOrFail($id);  // Zoek de reservering op basis van ID
+            $reservation->delete();  // Verwijder de reservering
+            return redirect()->route('reservations.index')->with('success', 'Reservation deleted successfully.');
+        } catch (\Exception $e) {
+            \Log::error('Error deleting reservation: ' . $e->getMessage());
+            return redirect()->route('reservations.index')->with('error', 'Error deleting reservation.');
+        }
     }
+    
 }
