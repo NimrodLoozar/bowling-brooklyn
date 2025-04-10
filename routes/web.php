@@ -7,15 +7,15 @@ use App\Http\Controllers\LaneController;
 use App\Livewire\Settings\Appearance;
 use App\Livewire\Settings\Password;
 use App\Livewire\Settings\Profile;
+use App\Http\Controllers\OrderController;
 use Illuminate\Support\Facades\Route;
-
 
 Route::get('/', function () {
     return view('welcome');
 })->name('home');
 
 Route::view('dashboard', 'dashboard')
-    ->middleware(['auth', 'verified'])
+    ->middleware(['auth', 'verified']) // Ensure authentication
     ->name('dashboard');
 
 Route::middleware(['auth'])->group(function () {
@@ -38,6 +38,8 @@ Route::middleware(['auth'])->group(function () {
 });
 
 // Contacts
-Route::resource('contacts', ContactController::class);
+Route::resource('contacts', ContactController::class)->middleware('auth'); // Protect contacts routes
+
+Route::resource('orders', OrderController::class)->middleware('auth'); // Protect orders routes
 
 require __DIR__.'/auth.php';
