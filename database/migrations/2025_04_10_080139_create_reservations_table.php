@@ -13,20 +13,21 @@ return new class extends Migration
     {
         Schema::create('reservations', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('UserID');
-            $table->unsignedBigInteger('BaanID');
-            $table->date('Data');
-            $table->time('Starttime');
-            $table->time('Endtime');
-            $table->unsignedTinyInteger('Aantal_personen')->default(1);
-            $table->string('Status', 50)->default('Bevestigd');
-            $table->decimal('Kosten', 8, 2)->nullable();
-            $table->boolean('Betaald')->default(0);
-            $table->text('Opmerking')->nullable();
+            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('baan_id');
+            $table->date('date');
+            $table->time('start_time');
+            $table->time('end_time');
+            $table->unsignedTinyInteger('number_of_people')->default(1);
+            $table->string('status', 50)->default('confirmed');
+            $table->decimal('cost', 8, 2)->nullable();
+            $table->boolean('paid')->default(false);
+            $table->text('note')->nullable();
             $table->timestamps();
 
-            $table->foreign('UserID')->references('id')->on('users')->onDelete('cascade');
-            $table->foreign('BaanID')->references('id')->on('baan')->onDelete('cascade');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('baan_id')->references('id')->on('baan')->onDelete('cascade');
+        });
         });
         });
     }
