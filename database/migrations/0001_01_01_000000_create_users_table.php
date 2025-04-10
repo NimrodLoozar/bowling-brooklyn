@@ -15,12 +15,15 @@ return new class extends Migration
             $table->id();
             $table->string('name', 255)->unique();
             $table->string('password', 255);
+            $table->string('email', 255)->unique();
+            $table->timestamp('email_verified_at')->nullable();
             $table->string('first_name', 255)->nullable();
             $table->string('middle_name', 100)->nullable();
             $table->string('last_name', 255)->nullable();
             $table->tinyInteger('role')->default(1);
             $table->timestamp('logged_in_at')->nullable();
             $table->string('token', 100)->nullable();
+            $table->rememberToken();
             $table->timestamps();
         });
 
