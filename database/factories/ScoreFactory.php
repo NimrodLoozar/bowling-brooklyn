@@ -17,7 +17,7 @@ class ScoreFactory extends Factory
     public function definition(): array
     {
         return [
-            'reservations_id' => \App\Models\Reservation::inRandomOrder()->first()->id,
+            'participant_id' => \App\Models\ReservationParticipant::inRandomOrder()->first()?->id ?? \App\Models\ReservationParticipant::factory()->create()->id,
             'score' => $this->faker->numberBetween(0, 300),
             'player_name' => $this->faker->name(),
             'round' => $this->faker->numberBetween(1, 10),

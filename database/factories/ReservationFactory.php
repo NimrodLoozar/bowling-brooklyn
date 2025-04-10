@@ -16,8 +16,10 @@ class ReservationFactory extends Factory
      */
     public function definition(): array
     {
+        $user = \App\Models\User::inRandomOrder()->first();
+
         return [
-            'user_id' => \App\Models\User::inRandomOrder()->first()->id,
+            'user_id' => $user->id,
             'lane_id' => \App\Models\Lane::inRandomOrder()->first()->id,
             'date' => $this->faker->date(),
             'start_time' => $this->faker->time(),
@@ -28,5 +30,16 @@ class ReservationFactory extends Factory
             'paid' => $this->faker->boolean(),
             'note' => $this->faker->sentence(),
         ];
+    }
+
+    public function configure()
+    {
+        return $this->afterCreating(function (\App\Models\Reservation $reservation) {
+            // Add the owner as a participant
+            \App\Models\ReservationParticipant::create([
+                'reservation_id' => $reservation->id,
+                'name' => $reservation->user->name,
+            ]);
+        });
     }
 }

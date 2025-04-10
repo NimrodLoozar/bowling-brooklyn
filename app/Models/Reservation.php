@@ -19,11 +19,16 @@ class Reservation extends Model
 
     public function lane()
     {
-        return $this->belongsTo(Lane::class);
+        return $this->hasOne(Lane::class);
     }
 
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function participants()
+    {
+        return $this->hasMany(ReservationParticipant::class);
     }
 }

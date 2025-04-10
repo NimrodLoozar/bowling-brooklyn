@@ -24,8 +24,14 @@ return new class extends Migration
             $table->boolean('paid')->default(false);
             $table->text('note')->nullable();
             $table->timestamps();
+        });
 
-            });
+        Schema::create('reservation_participants', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('reservation_id')->constrained('reservations')->onDelete('cascade');
+            $table->string('name', 100);
+            $table->timestamps();
+        });
     }
 
     /**
@@ -33,6 +39,7 @@ return new class extends Migration
      */
     public function down(): void
     {
+        Schema::dropIfExists('reservation_participants');
         Schema::dropIfExists('reservations');
     }
 };

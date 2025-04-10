@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('scores', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('reservations_id')->constrained('reservations')->onDelete('cascade');
+            $table->foreignId('participant_id')->constrained('reservation_participants')->onDelete('cascade');
             $table->integer('score')->default(0);
             $table->string('player_name', 100)->nullable();
             $table->unsignedInteger('round')->default(1)->nullable();

@@ -13,18 +13,21 @@ class ScoresController extends Controller
 {
     public function index()
     {
-        // $scores = DB::table('scores')->select('scores.*')->get();
-
-        $scores = DB::table('scores')
-            ->join('reservations', 'scores.reservations_id', '=', 'reservations.id')
+        $reservations = DB::table('scores')
+            ->join('reservation_participants', 'scores.participant_id', '=', 'reservation_participants.id')
+            ->join('reservations', 'reservation_participants.reservation_id', '=', 'reservations.id')
             ->join('lanes', 'reservations.lane_id', '=', 'lanes.id')
             ->join('users', 'reservations.user_id', '=', 'users.id')
-            ->select('scores.*', 'lanes.*', 'users.*', 'reservations.*')
+            ->select(
+                'scores.score as participant_score', // Include participant's score
+                'reservation_participants.name as participant_name', // Include participant's name
+                'reservations.id as reservation_id', // Include reservation ID
+                'users.name as reservation_owner_name', // Include reservation owner's name
+                DB::raw('IF(reservation_participants.name = users.name, 1, 0) as is_owner') // Flag to indicate if the participant is the owner
+            )
             ->get();
 
-        return view('scores.index', compact('scores'
-        // , 'lanes', 'users', 'reservations'
-    ));
+        return view('scores.index', compact('reservations'));
     }
 
     public function create()
