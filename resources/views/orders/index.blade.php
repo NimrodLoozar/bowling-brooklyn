@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+{{-- <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -7,7 +7,21 @@
 </head>
 <body>
     <h1>Order Overview</h1>
-    <a href="{{ route('orders.create') }}" style="margin-bottom: 20px; display: inline-block;">Create Order</a>
+
+    @if (session('error'))
+        <div style="color: red;">
+            {{ session('error') }}
+        </div>
+    @endif
+
+    @if (session('success'))
+        <div style="color: green;">
+            {{ session('success') }}
+        </div>
+    @endif --}}
+    <x-layouts.app :title="__('Dashboard')">
+
+    {{-- <a href="{{ route('orders.create') }}" style="margin-bottom: 20px; display: inline-block;">Create Order</a> --}}
     <table border="1">
         <thead>
             <tr>
@@ -27,8 +41,8 @@
             @foreach ($orders as $order)
                 <tr>
                     <td>{{ $order->besteldatum }}</td>
-                    <td>{{ $order->product }}</td> <!-- Display product as a string -->
-                    <td>{{ $order->sub_product }}</td> <!-- Display sub_product as a string -->
+                    <td>{{ $order->product }}</td>
+                    <td>{{ $order->sub_product }}</td>
                     <td>{{ $order->status }}</td>
                     <td>{{ $order->totaalbedrag }}</td>
                     <td>{{ $order->betaalmethode }}</td>
@@ -36,7 +50,9 @@
                     <td>{{ $order->aantal }}</td>
                     <td>{{ $order->opmerking }}</td>
                     <td>
-                        <a href="{{ route('orders.edit', $order->id) }}">Edit</a> |
+                        @if (!in_array($order->status, ['In behandeling', 'Verzonden']))
+                            <a href="{{ route('orders.edit', $order->id) }}">Edit</a> |
+                        @endif
                         <form action="{{ route('orders.destroy', $order->id) }}" method="POST" style="display:inline;">
                             @csrf
                             @method('DELETE')
@@ -47,5 +63,6 @@
             @endforeach
         </tbody>
     </table>
-</body>
-</html>
+    </x-layouts.app>
+{{-- </body>
+</html> --}}

@@ -53,6 +53,11 @@ class OrderController extends Controller
      */
     public function edit(Order $order)
     {
+        // Check if the order is already processed
+        if (in_array($order->status, ['In behandeling', 'Verzonden'])) {
+            return redirect()->route('orders.index')->with('error', 'Bestelling kan niet meer worden aangepast');
+        }
+
         return view('orders.edit', compact('order'));
     }
 
@@ -61,6 +66,11 @@ class OrderController extends Controller
      */
     public function update(Request $request, Order $order)
     {
+        // Check if the order is already processed
+        if (in_array($order->status, ['In behandeling', 'Verzonden'])) {
+            return redirect()->route('orders.index')->with('error', 'Bestelling kan niet meer worden aangepast');
+        }
+
         $validated = $request->validate([
             'product' => 'nullable|string|max:255', // Validate product as a string
             'sub_product' => 'nullable|string|max:255', // Validate sub_product as a string
@@ -75,7 +85,7 @@ class OrderController extends Controller
 
         $order->update($validated);
 
-        return redirect()->route('orders.index')->with('success', 'Order updated successfully.');
+        return redirect()->route('orders.index')->with('success', 'Bestelling succesvol bijgewerkt');
     }
 
     /**

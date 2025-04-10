@@ -36,5 +36,7 @@ class DatabaseSeeder extends Seeder
 
 
         Score::factory(50)->create();
+        $this->call(OrderSeeder::class); // Ensure the correct class name is used
     }
+    
 }
