@@ -20,9 +20,7 @@ return new class extends Migration
             $table->string('city', 100)->nullable();
             $table->string('country', 100)->nullable();
             $table->text('notes')->nullable();
-            $table->dateTime('created_at');
-            $table->dateTime('updated_at');
-            
+            $table->timestamps();
             // Add foreign key constraint if needed
             // $table->foreign('user_id')->references('id')->on('users');
         });
