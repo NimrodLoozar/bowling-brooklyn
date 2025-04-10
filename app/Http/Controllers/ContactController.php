@@ -67,7 +67,8 @@ class ContactController extends Controller
      */
     public function edit(Contact $contact)
     {
-        return view('contacts.edit', compact('contact'));
+        $users = User::all(); // Add this line
+        return view('contacts.edit', compact('contact', 'users')); // Update this line
     }
 
     /**
@@ -75,8 +76,15 @@ class ContactController extends Controller
      */
     public function update(Request $request, Contact $contact)
     {
+        // Check for simulated error
+        if ($request->has('simulate_error')) {
+            return back()
+                ->withInput()
+                ->with('error', 'Could not update contact (simulated server error)');
+        }    
+    
         $validated = $request->validate([
-            'user_id' => 'nullable|exists:users,id',
+            'user_id' => 'required|exists:users,id',
             'mobile' => 'nullable|string|max:20',
             'address' => 'nullable|string|max:255',
             'postal_code' => 'nullable|string|max:10',
@@ -84,9 +92,9 @@ class ContactController extends Controller
             'country' => 'nullable|string|max:100',
             'notes' => 'nullable|string',
         ]);
-
+    
         $contact->update($validated);
-
+    
         return redirect()->route('contacts.index')
             ->with('success', 'Contact updated successfully.');
     }
@@ -95,10 +103,23 @@ class ContactController extends Controller
      * Remove the specified contact.
      */
     public function destroy(Contact $contact)
-    {
-        $contact->delete();
+{
+    if (request()->has('simulate_error')) {
+        return redirect()->route('contacts.index')
+            ->with('error', 'Could not delete contact (simulated server error)');
+    }
 
+    try {
+        $contact->delete();
         return redirect()->route('contacts.index')
             ->with('success', 'Contact deleted successfully.');
+    } catch (\Exception $e) {
+        // Log the actual error
+        \Log::error('Contact deletion failed: ' . $e->getMessage());
+        
+        // Return user-friendly error message
+        return redirect()->route('contacts.index')
+            ->with('error', 'This contact could not be deleted. It may be referenced by other records.');
     }
+}
 }

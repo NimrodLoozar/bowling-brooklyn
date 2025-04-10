@@ -2,27 +2,24 @@
 
 namespace Database\Factories;
 
+use App\Models\Contact;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class ContactFactory extends Factory
 {
-    /**
-     * Define the model's default state.
-     *
-     * @return array
-     */
+    protected $model = Contact::class;
+
     public function definition()
     {
         return [
-            'user_id' => null, // Will be overridden when needed
+            'user_id' => User::factory(),
             'mobile' => $this->faker->phoneNumber(),
             'address' => $this->faker->streetAddress(),
             'postal_code' => $this->faker->postcode(),
             'city' => $this->faker->city(),
             'country' => $this->faker->country(),
             'notes' => $this->faker->paragraph(),
-            'created_at' => $this->faker->dateTimeBetween('-1 year', 'now'),
-            'updated_at' => $this->faker->dateTimeBetween('-1 year', 'now'),
         ];
     }
 }
