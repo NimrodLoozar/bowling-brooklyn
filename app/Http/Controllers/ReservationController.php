@@ -28,7 +28,7 @@ class ReservationController extends Controller
             'start_time' => 'required',
             'end_time' => 'required',
             'number_of_people' => 'required|integer|min:2', // Ensure at least 2 participants
-            'participants' => 'required|array|min:2', // Ensure at least 2 participants
+            'participants' => 'required|array|min:1', // Ensure at least 1 additional participant
             'participants.*.name' => 'required|string|max:100',
         ]);
 

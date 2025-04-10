@@ -22,7 +22,7 @@ class ScoresController extends Controller
                 'scores.score as participant_score', // Include participant's score
                 'reservation_participants.name as participant_name', // Include participant's name
                 'reservations.id as reservation_id', // Include reservation ID
-                'users.name as reservation_owner_name', // Include reservation owner's name
+                'users.name as user_name', // Alias the user's name
                 DB::raw('IF(reservation_participants.name = users.name, 1, 0) as is_owner') // Flag to indicate if the participant is the owner
             )
             ->get();
@@ -63,5 +63,10 @@ class ScoresController extends Controller
     public function destroy($id)
     {
         // Logic to delete a specific score
+        // Find the score by ID and delete it
+        $score = Score::findOrFail($id);
+        $score->delete();
+
+        return redirect()->route('scores.index')->with('success', 'Score deleted successfully.');    
     }
 }
