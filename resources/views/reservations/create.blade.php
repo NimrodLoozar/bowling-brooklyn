@@ -68,8 +68,6 @@
                 <input type="number" id="number_of_people" name="number_of_people" value="1" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500" min="1" required>
             </div>
 
-            <!-- Removed status, cost, and paid fields -->
-
             <div class="mb-4">
                 <label for="note" class="block text-sm font-medium text-gray-700">Note</label>
                 <textarea id="note" name="note" rows="4" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500"></textarea>
@@ -80,6 +78,28 @@
             </div>
         </form>
     </div>
+
+    <!-- Script to append seconds to time inputs -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const startTimeInput = document.getElementById('start_time');
+            const endTimeInput = document.getElementById('end_time');
+
+            startTimeInput.addEventListener('change', function() {
+                let value = startTimeInput.value;
+                if (value && value.length === 5) {
+                    startTimeInput.value = value + ":00";
+                }
+            });
+
+            endTimeInput.addEventListener('change', function() {
+                let value = endTimeInput.value;
+                if (value && value.length === 5) {
+                    endTimeInput.value = value + ":00";
+                }
+            });
+        });
+    </script>
 
 </body>
 </html>
