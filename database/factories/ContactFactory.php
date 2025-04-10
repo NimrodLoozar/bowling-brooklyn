@@ -15,7 +15,6 @@ class ContactFactory extends Factory
     {
         return [
             'user_id' => null, // Will be overridden when needed
-            'email' => $this->faker->unique()->safeEmail(),
             'phone' => $this->faker->phoneNumber(),
             'mobile' => $this->faker->phoneNumber(),
             'address' => $this->faker->streetAddress(),

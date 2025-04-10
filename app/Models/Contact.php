@@ -26,7 +26,6 @@ class Contact extends Model
      */
     protected $fillable = [
         'user_id',
-        'email',
         'phone',
         'mobile',
         'address',
