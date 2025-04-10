@@ -1,3 +1,8 @@
+{{-- !!!!!!!!!!!!!!!!!!!!!!!!!!! --}}
+{{-- LET OP! --}}
+{{-- Auto Formatting uitzetten --}}
+{{-- !!!!!!!!!!!!!!!!!!!!!!!!!!! --}}
+
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="dark">
     <head>
@@ -14,6 +19,7 @@
             <flux:navlist variant="outline">
                 <flux:navlist.group :heading="__('Platform')" class="grid">
                     <flux:navlist.item icon="home" :href="route('dashboard')" :current="request()->routeIs('dashboard')" wire:navigate>{{ __('Dashboard') }}</flux:navlist.item>
+                    <flux:navlist.item icon="chart-bar" :href="route('scores.index')" :current="request()->routeIs('scores.*')" wire:navigate>{{ __('Scores') }}</flux:navlist.item>
                 </flux:navlist.group>
             </flux:navlist>
 
