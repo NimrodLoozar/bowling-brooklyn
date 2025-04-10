@@ -14,7 +14,6 @@ return new class extends Migration
         Schema::create('contacts', function (Blueprint $table) {
             $table->unsignedInteger('id')->autoIncrement();
             $table->unsignedInteger('user_id')->nullable()->comment('Person ID');
-            $table->string('email', 255);
             $table->string('phone', 20)->nullable();
             $table->string('mobile', 20)->nullable();
             $table->string('address', 255)->nullable();
@@ -22,9 +21,7 @@ return new class extends Migration
             $table->string('city', 100)->nullable();
             $table->string('country', 100)->nullable();
             $table->text('notes')->nullable();
-            $table->dateTime('created_at');
-            $table->dateTime('updated_at');
-            
+            $table->timestamps();
             // Add foreign key constraint if needed
             // $table->foreign('user_id')->references('id')->on('users');
         });

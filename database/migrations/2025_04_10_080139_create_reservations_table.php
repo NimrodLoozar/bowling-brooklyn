@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('reservations', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('user_id');
-            $table->unsignedBigInteger('lane_id');
+            $table->unsignedBigInteger('user_id')->nullable()->comment('Person ID');
+            $table->unsignedBigInteger('lane_id')->nullable()->comment('Lane ID');
             $table->date('date');
             $table->time('start_time');
             $table->time('end_time');
@@ -26,7 +26,7 @@ return new class extends Migration
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->foreign('lane_id')->references('id')->on('lane')->onDelete('cascade');
+            $table->foreign('lane_id')->references('id')->on('lanes')->onDelete('cascade');
         });
     }
 

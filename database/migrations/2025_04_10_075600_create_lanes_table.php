@@ -21,8 +21,6 @@ return new class extends Migration
             $table->decimal('prijs_per_uur', 8, 2);
             $table->text('note')->nullable();
             $table->tinyInteger('actief')->default(1);
-            $table->timestamp('created_at')->useCurrent();
-            $table->timestamp('updated_at')->useCurrent()->useCurrentOnUpdate();
             $table->timestamps();
         });
     }
