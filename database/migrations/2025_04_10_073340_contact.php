@@ -14,7 +14,6 @@ return new class extends Migration
         Schema::create('contacts', function (Blueprint $table) {
             $table->unsignedInteger('id')->autoIncrement();
             $table->unsignedInteger('user_id')->nullable()->comment('Person ID');
-            $table->string('phone', 20)->nullable();
             $table->string('mobile', 20)->nullable();
             $table->string('address', 255)->nullable();
             $table->string('postal_code', 10)->nullable();

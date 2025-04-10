@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Contact;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class ContactController extends Controller
@@ -21,7 +22,8 @@ class ContactController extends Controller
      */
     public function create()
     {
-        return view('contacts.create');
+        $users = User::all(); // Or User::pluck('name', 'id') for a more compact select
+        return view('contacts.create', compact('users'));
     }
 
     /**
@@ -32,7 +34,6 @@ class ContactController extends Controller
         $validated = $request->validate([
             'user_id' => 'nullable|exists:users,id',
             'email' => 'required|email|max:255|unique:contacts,email',
-            'phone' => 'nullable|string|max:20',
             'mobile' => 'nullable|string|max:20',
             'address' => 'nullable|string|max:255',
             'postal_code' => 'nullable|string|max:10',
@@ -71,7 +72,6 @@ class ContactController extends Controller
         $validated = $request->validate([
             'user_id' => 'nullable|exists:users,id',
             'email' => 'required|email|max:255|unique:contacts,email,'.$contact->id,
-            'phone' => 'nullable|string|max:20',
             'mobile' => 'nullable|string|max:20',
             'address' => 'nullable|string|max:255',
             'postal_code' => 'nullable|string|max:10',
