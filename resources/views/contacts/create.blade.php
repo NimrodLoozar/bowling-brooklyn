@@ -11,6 +11,16 @@
                 </a>
             </div>
 
+            @if ($errors->any())
+                <div class="mb-6 p-4 bg-red-100 border-l-4 border-red-500 text-red-700 dark:bg-red-900 dark:border-red-700 dark:text-red-100">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
+
             <div class="bg-white shadow overflow-hidden sm:rounded-lg dark:bg-gray-800">
                 <form action="{{ route('contacts.store') }}" method="POST" class="px-6 py-6">
                     @csrf
@@ -30,21 +40,15 @@
                                     </option>
                                 @endforeach
                             </select>
-                            @error('user_id')
-                                <p class="mt-1 text-sm text-red-600 dark:text-red-400">{{ $message }}</p>
-                            @enderror
                         </div>
 
-                        <!-- Mobile Number -->
+                        <!-- Mobile Number (now required) -->
                         <div>
                             <label for="mobile" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                                Mobile Number
+                                Mobile Number <span class="text-red-500">*</span>
                             </label>
-                            <input type="text" id="mobile" name="mobile" value="{{ old('mobile') }}"
+                            <input type="text" id="mobile" name="mobile" value="{{ old('mobile') }}" required
                                    class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100 dark:focus:border-indigo-400 dark:focus:ring-indigo-400">
-                            @error('mobile')
-                                <p class="mt-1 text-sm text-red-600 dark:text-red-400">{{ $message }}</p>
-                            @enderror
                         </div>
 
                         <!-- Address -->
@@ -54,47 +58,32 @@
                             </label>
                             <input type="text" id="address" name="address" value="{{ old('address') }}"
                                    class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100 dark:focus:border-indigo-400 dark:focus:ring-indigo-400">
-                            @error('address')
-                                <p class="mt-1 text-sm text-red-600 dark:text-red-400">{{ $message }}</p>
-                            @enderror
                         </div>
 
                         <!-- City/Postal Code/Country Row -->
                         <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                            <!-- Postal Code -->
                             <div>
                                 <label for="postal_code" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                                     Postal Code
                                 </label>
                                 <input type="text" id="postal_code" name="postal_code" value="{{ old('postal_code') }}"
                                        class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100 dark:focus:border-indigo-400 dark:focus:ring-indigo-400">
-                                @error('postal_code')
-                                    <p class="mt-1 text-sm text-red-600 dark:text-red-400">{{ $message }}</p>
-                                @enderror
                             </div>
 
-                            <!-- City -->
                             <div>
                                 <label for="city" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                                     City
                                 </label>
                                 <input type="text" id="city" name="city" value="{{ old('city') }}"
                                        class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100 dark:focus:border-indigo-400 dark:focus:ring-indigo-400">
-                                @error('city')
-                                    <p class="mt-1 text-sm text-red-600 dark:text-red-400">{{ $message }}</p>
-                                @enderror
                             </div>
 
-                            <!-- Country -->
                             <div>
                                 <label for="country" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                                     Country
                                 </label>
                                 <input type="text" id="country" name="country" value="{{ old('country') }}"
                                        class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100 dark:focus:border-indigo-400 dark:focus:ring-indigo-400">
-                                @error('country')
-                                    <p class="mt-1 text-sm text-red-600 dark:text-red-400">{{ $message }}</p>
-                                @enderror
                             </div>
                         </div>
 
@@ -105,9 +94,6 @@
                             </label>
                             <textarea id="notes" name="notes" rows="3"
                                       class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100 dark:focus:border-indigo-400 dark:focus:ring-indigo-400">{{ old('notes') }}</textarea>
-                            @error('notes')
-                                <p class="mt-1 text-sm text-red-600 dark:text-red-400">{{ $message }}</p>
-                            @enderror
                         </div>
 
                         <!-- Submit Button -->

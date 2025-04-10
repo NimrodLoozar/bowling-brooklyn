@@ -32,18 +32,17 @@ class ContactController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'user_id' => 'nullable|exists:users,id',
-            'email' => 'required|email|max:255|unique:contacts,email',
-            'mobile' => 'nullable|string|max:20',
+            'user_id' => 'required|exists:users,id',
+            'mobile' => 'required|string|max:20', // Now required instead of phone
             'address' => 'nullable|string|max:255',
             'postal_code' => 'nullable|string|max:10',
             'city' => 'nullable|string|max:100',
             'country' => 'nullable|string|max:100',
             'notes' => 'nullable|string',
         ]);
-
+    
         Contact::create($validated);
-
+    
         return redirect()->route('contacts.index')
             ->with('success', 'Contact created successfully.');
     }
