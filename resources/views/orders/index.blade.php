@@ -27,8 +27,8 @@
             @foreach ($orders as $order)
                 <tr>
                     <td>{{ $order->besteldatum }}</td>
-                    <td>{{ $order->product }}</td>
-                    <td>{{ $order->sub_product }}</td>
+                    <td>{{ $order->product }}</td> <!-- Display product as a string -->
+                    <td>{{ $order->sub_product }}</td> <!-- Display sub_product as a string -->
                     <td>{{ $order->status }}</td>
                     <td>{{ $order->totaalbedrag }}</td>
                     <td>{{ $order->betaalmethode }}</td>

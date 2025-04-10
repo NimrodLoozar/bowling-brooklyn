@@ -11,6 +11,8 @@ class Order extends Model
 
     protected $fillable = [
         'user_id',
+        'product', // Store as a string
+        'sub_product', // Store as a string
         'besteldatum',
         'status',
         'totaalbedrag',
@@ -21,7 +23,7 @@ class Order extends Model
     ];
 
     protected $casts = [
-        'besteldatum' => 'datetime', // Cast besteldatum to a Carbon instance
+        'besteldatum' => 'datetime',
     ];
 
     /**

@@ -4,37 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Edit Order</title>
-    <script>
-        function updateSubProduct() {
-            const product = document.getElementById('product').value;
-            const subProduct = document.getElementById('sub-product');
-            subProduct.innerHTML = ''; // Clear existing options
-
-            if (product === 'Eten') {
-                const options = ['Pizza', 'Hamburger', 'Friet'];
-                options.forEach(option => {
-                    const opt = document.createElement('option');
-                    opt.value = option;
-                    opt.textContent = option;
-                    subProduct.appendChild(opt);
-                });
-            } else if (product === 'Drinken') {
-                const options = ['Cola', 'Fanta', 'Water'];
-                options.forEach(option => {
-                    const opt = document.createElement('option');
-                    opt.value = option;
-                    opt.textContent = option;
-                    subProduct.appendChild(opt);
-                });
-            }
-        }
-
-        // Pre-fill sub-product options on page load
-        window.onload = function() {
-            updateSubProduct();
-            document.getElementById('sub-product').value = "{{ $order->sub_product }}";
-        };
-    </script>
 </head>
 <body>
     <h1>Edit Order</h1>
@@ -42,15 +11,19 @@
         @csrf
         @method('PUT')
 
-        <label>Product:</label>
-        <select id="product" name="product" onchange="updateSubProduct()" required>
-            <option value="Eten" {{ $order->product == 'Eten' ? 'selected' : '' }}>Eten</option>
-            <option value="Drinken" {{ $order->product == 'Drinken' ? 'selected' : '' }}>Drinken</option>
+        <label>Product (Eten):</label>
+        <select id="product" name="product" required>
+            <option value="Pizza" {{ $order->product == 'Pizza' ? 'selected' : '' }}>Pizza</option>
+            <option value="Hamburger" {{ $order->product == 'Hamburger' ? 'selected' : '' }}>Hamburger</option>
+            <option value="Friet" {{ $order->product == 'Friet' ? 'selected' : '' }}>Friet</option>
         </select><br>
 
-        <label>Subproduct:</label>
-        <select id="sub-product" name="sub_product" required>
-            <option value="">Selecteer een subproduct</option>
+        <label>Subproduct (Drinken):</label>
+        <select id="sub-product" name="sub_product">
+            <option value="" disabled>Selecteer een subproduct</option>
+            <option value="Cola" {{ $order->sub_product == 'Cola' ? 'selected' : '' }}>Cola</option>
+            <option value="Fanta" {{ $order->sub_product == 'Fanta' ? 'selected' : '' }}>Fanta</option>
+            <option value="Water" {{ $order->sub_product == 'Water' ? 'selected' : '' }}>Water</option>
         </select><br>
 
         <label>Besteldatum:</label>

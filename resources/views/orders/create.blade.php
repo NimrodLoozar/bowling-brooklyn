@@ -4,47 +4,26 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Create Order</title>
-    <script>
-        function updateSubProduct() {
-            const product = document.getElementById('product').value;
-            const subProduct = document.getElementById('sub-product');
-            subProduct.innerHTML = ''; // Clear existing options
-
-            if (product === 'Eten') {
-                const options = ['Pizza', 'Hamburger', 'Friet'];
-                options.forEach(option => {
-                    const opt = document.createElement('option');
-                    opt.value = option;
-                    opt.textContent = option;
-                    subProduct.appendChild(opt);
-                });
-            } else if (product === 'Drinken') {
-                const options = ['Cola', 'Fanta', 'Water'];
-                options.forEach(option => {
-                    const opt = document.createElement('option');
-                    opt.value = option;
-                    opt.textContent = option;
-                    subProduct.appendChild(opt);
-                });
-            }
-        }
-    </script>
 </head>
 <body>
     <h1>Create Order</h1>
     <form action="{{ route('orders.store') }}" method="POST">
         @csrf
 
-        <label>Product:</label>
-        <select id="product" name="product" onchange="updateSubProduct()" required>
-            <option value="">Selecteer een product</option>
-            <option value="Eten">Eten</option>
-            <option value="Drinken">Drinken</option>
+        <label>Product (Eten):</label>
+        <select id="product" name="product" required>
+            <option value="" disabled selected>Selecteer een product</option>
+            <option value="Pizza">Pizza</option>
+            <option value="Hamburger">Hamburger</option>
+            <option value="Friet">Friet</option>
         </select><br>
 
-        <label>Subproduct:</label>
-        <select id="sub-product" name="sub_product" required>
-            <option value="">Selecteer een subproduct</option>
+        <label>Subproduct (Drinken):</label>
+        <select id="sub-product" name="sub_product">
+            <option value="" disabled selected>Selecteer een subproduct</option>
+            <option value="Cola">Cola</option>
+            <option value="Fanta">Fanta</option>
+            <option value="Water">Water</option>
         </select><br>
 
         <label>Status:</label>

@@ -30,8 +30,8 @@ class OrderController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'product' => 'required|string|max:255',
-            'sub_product' => 'required|string|max:255', // Ensure sub_product is required
+            'product' => 'nullable|string|max:255', // Validate product as a string
+            'sub_product' => 'nullable|string|max:255', // Validate sub_product as a string
             'status' => 'required|string|max:50',
             'totaalbedrag' => 'required|numeric',
             'betaalmethode' => 'nullable|string|max:50',
@@ -40,11 +40,8 @@ class OrderController extends Controller
             'opmerking' => 'nullable|string',
         ]);
 
-        // Automatically set the current date and time for besteldatum
         $validated['besteldatum'] = now();
-
-        // Assign a default user_id (e.g., the currently authenticated user)
-        $validated['user_id'] = auth()->id() ?? 1; // Replace 1 with a default user ID if needed
+        $validated['user_id'] = auth()->id() ?? 1;
 
         Order::create($validated);
 
@@ -65,8 +62,8 @@ class OrderController extends Controller
     public function update(Request $request, Order $order)
     {
         $validated = $request->validate([
-            'product' => 'required|string|max:255',
-            'sub_product' => 'required|string|max:255', // Ensure sub_product is required
+            'product' => 'nullable|string|max:255', // Validate product as a string
+            'sub_product' => 'nullable|string|max:255', // Validate sub_product as a string
             'besteldatum' => 'required|date',
             'status' => 'required|string|max:50',
             'totaalbedrag' => 'required|numeric',

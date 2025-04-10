@@ -6,7 +6,7 @@ use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 
-class OrderSeeder extends Seeder // Ensure the class name is "OrderSeeder"
+class OrderSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -16,8 +16,8 @@ class OrderSeeder extends Seeder // Ensure the class name is "OrderSeeder"
         DB::table('orders')->insert([
             [
                 'user_id' => 1, // Ensure this ID exists in the users table
-                'product' => 'Eten', // Example product
-                'sub_product' => 'Pizza', // Example sub-product
+                'product' => 'Pizza', // Store as plain string
+                'sub_product' => 'Cola', // Store as plain string
                 'besteldatum' => Carbon::now(),
                 'status' => 'Nieuw',
                 'totaalbedrag' => 50.00,
@@ -30,8 +30,8 @@ class OrderSeeder extends Seeder // Ensure the class name is "OrderSeeder"
             ],
             [
                 'user_id' => 2, // Ensure this ID exists in the users table
-                'product' => 'Drinken', // Example product
-                'sub_product' => 'Cola', // Example sub-product
+                'product' => 'Hamburger', // Store as plain string
+                'sub_product' => 'Fanta', // Store as plain string
                 'besteldatum' => Carbon::now()->subDays(1),
                 'status' => 'Verzonden',
                 'totaalbedrag' => 75.50,
@@ -44,8 +44,8 @@ class OrderSeeder extends Seeder // Ensure the class name is "OrderSeeder"
             ],
             [
                 'user_id' => 3, // Ensure this ID exists in the users table
-                'product' => 'Eten', // Example product
-                'sub_product' => 'Hamburger', // Example sub-product
+                'product' => 'Friet', // Store as plain string
+                'sub_product' => 'Water', // Store as plain string
                 'besteldatum' => Carbon::now()->subDays(2),
                 'status' => 'Geannuleerd',
                 'totaalbedrag' => 0.00,
