@@ -9,6 +9,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LaneController;
 use App\Http\Controllers\ReservationController;
 
+Route::resource('reservations', ReservationController::class);
+
 Route::get('/', function () {
     return view('welcome');
 })->name('home');

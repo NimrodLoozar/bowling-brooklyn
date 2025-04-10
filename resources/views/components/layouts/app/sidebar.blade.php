@@ -16,10 +16,10 @@
         <flux:navlist variant="outline">
             <flux:navlist.group :heading="__('Platform')" class="grid">
                 <flux:navlist.item icon="home" :href="route('dashboard')"
-                    :current="request() - > routeIs('dashboard')" wire:navigate>{{ __('Dashboard') }}
+                    :current="request()->routeIs('dashboard')" wire:navigate>{{ __('Dashboard') }}
                 </flux:navlist.item>
                 <flux:navlist.item icon="trophy" :href="route('scores.index')"
-                    :current="request() - > routeIs('scores.*')" wire:navigate>{{ __('Scores') }}</flux:navlist.item>
+                    :current="request()->routeIs('scores.*')" wire:navigate>{{ __('Scores') }}</flux:navlist.item>
             </flux:navlist.group>
         </flux:navlist>
 
@@ -38,7 +38,7 @@
 
         <!-- Desktop User Menu -->
         <flux:dropdown position="bottom" align="start">
-            <flux:profile :name="auth() - > user() - > name" :initials="auth() - > user() - > initials()"
+            <flux:profile :name="auth()->user()->name" :initials="auth()->user()->initials()"
                 icon-trailing="chevrons-up-down" />
 
             <flux:menu class="w-[220px]">
@@ -86,7 +86,7 @@
         <flux:spacer />
 
         <flux:dropdown position="top" align="end">
-            <flux:profile :initials="auth() - > user() - > initials()" icon-trailing="chevron-down" />
+            <flux:profile :initials="auth()->user()->initials()" icon-trailing="chevron-down" />
 
             <flux:menu>
                 <flux:menu.radio.group>
