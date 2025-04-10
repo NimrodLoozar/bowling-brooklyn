@@ -30,8 +30,8 @@ class OrderController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'user_id' => 'required|integer',
-            'besteldatum' => 'required|date',
+            'product' => 'required|string|max:255',
+            'sub_product' => 'required|string|max:255', // Ensure sub_product is required
             'status' => 'required|string|max:50',
             'totaalbedrag' => 'required|numeric',
             'betaalmethode' => 'nullable|string|max:50',
@@ -39,6 +39,12 @@ class OrderController extends Controller
             'aantal' => 'required|integer',
             'opmerking' => 'nullable|string',
         ]);
+
+        // Automatically set the current date and time for besteldatum
+        $validated['besteldatum'] = now();
+
+        // Assign a default user_id (e.g., the currently authenticated user)
+        $validated['user_id'] = auth()->id() ?? 1; // Replace 1 with a default user ID if needed
 
         Order::create($validated);
 
@@ -59,7 +65,8 @@ class OrderController extends Controller
     public function update(Request $request, Order $order)
     {
         $validated = $request->validate([
-            'user_id' => 'required|integer',
+            'product' => 'required|string|max:255',
+            'sub_product' => 'required|string|max:255', // Ensure sub_product is required
             'besteldatum' => 'required|date',
             'status' => 'required|string|max:50',
             'totaalbedrag' => 'required|numeric',

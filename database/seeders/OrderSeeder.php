@@ -16,6 +16,8 @@ class OrderSeeder extends Seeder // Ensure the class name is "OrderSeeder"
         DB::table('orders')->insert([
             [
                 'user_id' => 1, // Ensure this ID exists in the users table
+                'product' => 'Eten', // Example product
+                'sub_product' => 'Pizza', // Example sub-product
                 'besteldatum' => Carbon::now(),
                 'status' => 'Nieuw',
                 'totaalbedrag' => 50.00,
@@ -28,6 +30,8 @@ class OrderSeeder extends Seeder // Ensure the class name is "OrderSeeder"
             ],
             [
                 'user_id' => 2, // Ensure this ID exists in the users table
+                'product' => 'Drinken', // Example product
+                'sub_product' => 'Cola', // Example sub-product
                 'besteldatum' => Carbon::now()->subDays(1),
                 'status' => 'Verzonden',
                 'totaalbedrag' => 75.50,
@@ -40,6 +44,8 @@ class OrderSeeder extends Seeder // Ensure the class name is "OrderSeeder"
             ],
             [
                 'user_id' => 3, // Ensure this ID exists in the users table
+                'product' => 'Eten', // Example product
+                'sub_product' => 'Hamburger', // Example sub-product
                 'besteldatum' => Carbon::now()->subDays(2),
                 'status' => 'Geannuleerd',
                 'totaalbedrag' => 0.00,

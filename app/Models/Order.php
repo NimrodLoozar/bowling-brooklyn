@@ -20,6 +20,10 @@ class Order extends Model
         'opmerking',
     ];
 
+    protected $casts = [
+        'besteldatum' => 'datetime', // Cast besteldatum to a Carbon instance
+    ];
+
     /**
      * Get the user that owns the order.
      */

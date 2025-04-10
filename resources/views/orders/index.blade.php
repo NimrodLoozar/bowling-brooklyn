@@ -7,10 +7,13 @@
 </head>
 <body>
     <h1>Order Overview</h1>
+    <a href="{{ route('orders.create') }}" style="margin-bottom: 20px; display: inline-block;">Create Order</a>
     <table border="1">
         <thead>
             <tr>
                 <th>Besteldatum</th>
+                <th>Product</th>
+                <th>Subproduct</th>
                 <th>Status</th>
                 <th>Totaalbedrag</th>
                 <th>Betaalmethode</th>
@@ -24,6 +27,8 @@
             @foreach ($orders as $order)
                 <tr>
                     <td>{{ $order->besteldatum }}</td>
+                    <td>{{ $order->product }}</td>
+                    <td>{{ $order->sub_product }}</td>
                     <td>{{ $order->status }}</td>
                     <td>{{ $order->totaalbedrag }}</td>
                     <td>{{ $order->betaalmethode }}</td>
