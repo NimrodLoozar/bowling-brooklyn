@@ -18,6 +18,7 @@ class ParticipantFactory extends Factory
     {
         return [
             'reservation_id' => $this->faker->randomDigitNotNull(),
+            'user_id' => \App\Models\User::inRandomOrder()->first()?->id ?? \App\Models\User::factory()->create()->id,
             'name' => $this->faker->name(),
         ];
     }

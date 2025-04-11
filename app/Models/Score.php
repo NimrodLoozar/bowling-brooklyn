@@ -16,8 +16,9 @@ class Score extends Model
         'updated_at',
     ];
 
-    public function reservation()
-    {
-        return $this->belongsTo(Reservation::class);
-    }
+    public function participant()
+{
+    return $this->belongsTo(ReservationParticipant::class, 'participant_id');
+}
+
 }
