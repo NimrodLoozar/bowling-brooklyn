@@ -29,7 +29,16 @@ return new class extends Migration
         Schema::create('reservation_participants', function (Blueprint $table) {
             $table->id();
             $table->foreignId('reservation_id')->constrained('reservations')->onDelete('cascade');
-            $table->string('name', 100);
+            $table->foreignId('user_id')->nullable()->constrained()->onDelete('cascade');
+            $table->integer('score')->default(0);
+            $table->unsignedInteger('round')->default(1)->nullable();
+            $table->date('date')->nullable();
+            $table->time('time')->nullable();
+            $table->text('comment', 255)->nullable();
+            $table->tinyInteger('validated', false, true)->default(0);
+            $table->string('player_name', 100)->nullable();
+            $table->string('team_name', 100)->nullable();
+            $table->string('name', 100)->nullable();
             $table->timestamps();
         });
     }
